@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flame - Your Hub for Web Games</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+            overflow: hidden;
+        }
+        header {
+            background-color: #e44d26;
+            color: white;
+            padding: 1em 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 0.5em 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5em 1em;
+            display: inline-block;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        .hero {
+            background-color: #f4f4f4;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .game-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+        .game-card img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+        .game-card h3 {
+            margin: 15px 0 10px;
+            color: #e44d26;
+        }
+        .game-card p {
+            font-size: 0.9em;
+            padding: 0 15px 15px;
+            color: #666;
+        }
+        .game-card a.play-button {
+            display: block;
+            background-color: #e44d26;
+            color: white;
+            padding: 10px 0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .game-card a.play-button:hover {
+            background-color: #d43b1c;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            margin-top: 20px;
+        }
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-size: 1.5em;
+            transition: opacity 0.5s ease-out;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .fire {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .fire-flame {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            height: 20px;
+            background: orange;
+            border-radius: 50%;
+            animation: flame-grow 2s infinite alternate ease-in-out;
+            opacity: 0.8;
+            filter: blur(5px);
+        }
+
+        .fire-flame:nth-child(1) {
+            left: 20px;
+            animation-delay: 0s;
+            background: linear-gradient(to top, #ff9900, #ff6600);
+            transform: scale(1.2);
+        }
+        .fire-flame:nth-child(2) {
+            left: 40px;
+            animation-delay: 0.2s;
+            background: linear-gradient(to top, #ff6600, #ff3300);
+            transform: scale(1.0);
+        }
+        .fire-flame:nth-child(3) {
+            left: 60px;
+            animation-delay: 0.4s;
+            background: linear-gradient(to top, #ff3300, #cc0000);
+            transform: scale(1.1);
+        }
+        .fire-flame:nth-child(4) {
+            left: 30px;
+            animation-delay: 0.6s;
+            background: linear-gradient(to top, #ffcc00, #ff9900);
+            transform: scale(0.9);
+        }
+        .fire-flame:nth-child(5) {
+            left: 50px;
+            animation-delay: 0.8s;
+            background: linear-gradient(to top, #ff6600, #ff3300);
+            transform: scale(1.3);
+        }
+
+        @keyframes flame-grow {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-20px) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.6;
+            }
+        }
+
+        .fire-log {
+            width: 80px;
+            height: 15px;
+            background-color: #5a2e00;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            transform: rotate(-5deg);
+        }
+
+        .fire-log:nth-child(2) {
+            width: 70px;
+            left: 25px;
+            bottom: 5px;
+            transform: rotate(10deg);
+        }
+
+        #content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-screen">
+        <div class="fire">
+            <div class="fire-flame"></div>
+            <div class="fire-flame"></div>
+            <div class="fire-flame"></div>
+            <div class="fire-flame"></div>
+            <div class="fire-flame"></div>
+            <div class="fire-log"></div>
+            <div class="fire-log"></div>
+        </div>
+        <p>Igniting Fun...</p>
+    </div>
+
+    <div id="content">
+        <header>
+            <h1>Flame 🔥</h1>
+            <p>Your ultimate destination for exciting web games!</p>
+        </header>
+
+        <nav>
+            <a href="#featured">Featured Games</a>
+            <a href="#categories">Categories</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="container">
+            <section class="hero">
+                <h2>Ignite Your Fun with Flame Games!</h2>
+                <p>Dive into a collection of free, fun, and addictive web games. No downloads, just pure entertainment!</p>
+            </section>
+
+            <section id="featured">
+                <h2>Featured Games</h2>
+                <div class="game-grid">
+                    <div class="game-card">
+                        <img src="https://via.placeholder.com/280x150/FF5733/FFFFFF?text=Awesome+Runner" alt="Awesome Runner Game">
+                        <h3>Awesome Runner</h3>
+                        <p>Test your reflexes in this fast-paced endless runner game. How far can you go?</p>
+                        <a href="games/awesome-runner.html" class="play-button">Play Now</a>
+                    </div>
+
+                    <div class="game-card">
+                        <img src="https://via.placeholder.com/280x150/33FF57/FFFFFF?text=Puzzle+Master" alt="Puzzle Master Game">
+                        <h3>Puzzle Master</h3>
+                        <p>Challenge your mind with a variety of engaging puzzles. Can you solve them all?</p>
+                        <a href="games/puzzle-master.html" class="play-button">Play Now</a>
+                    </div>
+
+                    <div class="game-card">
+                        <img src="https://via.placeholder.com/280x150/3357FF/FFFFFF?text=Space+Invaders+Remix" alt="Space Invaders Remix Game">
+                        <h3>Space Invaders Remix</h3>
+                        <p>A modern twist on a classic arcade shooter. Defend the galaxy!</p>
+                        <a href="games/space-invaders-remix.html" class="play-button">Play Now</a>
+                    </div>
+
+                    <div class="game-card">
+                        <img src="https://via.placeholder.com/280x150/FF33CC/FFFFFF?text=Block+Breaker" alt="Block Breaker Game">
+                        <h3>Block Breaker</h3>
+                        <p>Break all the blocks and achieve a high score in this addictive arcade game.</p>
+                        <a href="games/block-breaker.html" class="play-button">Play Now</a>
+                    </div>
+                </div>
+            </section>
+
+            <hr>
+
+            <section id="categories">
+                <h2>Explore by Category</h2>
+                <p>Coming soon: A comprehensive list of game categories to help you find your next favorite!</p>
+                <ul>
+                    <li>Action</li>
+                    <li>Puzzle</li>
+                    <li>Strategy</li>
+                    <li>Arcade</li>
+                    <li>Adventure</li>
+                    <li>Sports</li>
+                </ul>
+            </section>
+
+            <hr>
+
+            <section id="about">
+                <h2>About Flame</h2>
+                <p>Flame is dedicated to bringing you the best free web games, playable directly in your browser. Our mission is to provide endless entertainment for gamers of all ages, with new games added regularly. We believe in accessible fun, so you can jump right in without any hassle.</p>
+            </section>
+
+            <hr>
+
+            <section id="contact">
+                <h2>Get in Touch</h2>
+                <p>Have a game suggestion, feedback, or need support? We'd love to hear from you!</p>
+                <p>Email: <a href="mailto:info@flamegames.com">info@flamegames.com</a></p>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Flame. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            const content = document.getElementById('content');
+
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                loadingScreen.addEventListener('transitionend', () => {
+                    loadingScreen.style.display = 'none';
+                    content.style.display = 'block';
+                    document.body.style.overflow = 'auto';
+                }, { once: true });
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

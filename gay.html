@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hshsh</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        blockquote {
+            border-left: 4px solid #ddd;
+            margin: 0;
+            padding-left: 15px;
+            color: #666;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+
+        #liveClock {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-size: 48px;
+            font-weight: 600;
+            color: #ffffff;
+            text-shadow: 0px 4px 12px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        #liveDate {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            color: #ffffff;
+            text-shadow: 0px 2px 8px rgba(0,0,0,0.5);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="
+  margin:0;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding-top:0;
+  background-image: url('https://mandatedmemoranda.com/wp-content/uploads/2013/11/clouds-3_5.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+">
+    <div id="content" style="display:flex; flex-direction:column; align-items:center;">
+
+        <!-- LIVE CLOCK -->
+        <div id="liveClock">--:--:--</div>
+        <div id="liveDate">Loading date...</div>
+
+        <div style="display:flex; gap:20px;">
+
+            <!-- DISCORD BUTTON -->
+            <button onclick="window.location.href='https://discord.com/login';" class="bannerBtn" style="
+              display:flex;
+              flex-direction:column;
+              align-items:center;
+              gap:5px;
+              font-size:18px;
+              padding:15px 25px;
+              background-color:#5865F2;
+              color:white;
+              border:none;
+              border-radius:12px;
+              cursor:pointer;
+              box-shadow:0px 6px 15px rgba(0,0,0,0.3);
+              width:130px;
+              transition: transform 0.2s ease, box-shadow 0.2s ease;
+            ">
+
+              <img id="discordImg" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" style="width: 50px; height: 50px; transition: opacity 0.4s ease 0s; opacity: 0;">
+
+                       <p style="color: #000000;">DISCORD</p>
+
+              <span id="discordStatus" style="font-size: 12px; opacity: 0; font-weight: normal; transition: opacity 0.4s ease 0s;">Online now</span>
+            </button>
+
+            <!-- SNAPCHAT BUTTON -->
+            <button onclick="window.location.href='https://www.snapchat.com';" class="bannerBtn" style="
+              display:flex;
+              flex-direction:column;
+              align-items:center;
+              gap:5px;
+              font-size:18px;
+              padding:15px 25px;
+              background-color:#FFFC00;
+              color:white;
+              border:none;
+              border-radius:12px;
+              cursor:pointer;
+              box-shadow:0px 6px 15px rgba(0,0,0,0.3);
+              width:130px;
+              transition: transform 0.2s ease, box-shadow 0.2s ease;
+            ">
+
+            <img id="snapchatImg" src="https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg" style="width:50px; height:50px;">
+
+                 <p style="color: #000000;">SNAPCHAT</p>
+            </button>
+
+            <!-- YOUTUBE BUTTON -->
+            <button onclick="window.location.href='https://youtube.com';" class="bannerBtn" style="
+              display:flex;
+              flex-direction:column;
+              align-items:center;
+              gap:5px;
+              font-size:18px;
+              padding:15px 25px;
+              background-color:#FF0000;
+              color:white;
+              border:none;
+              border-radius:12px;
+              cursor:pointer;
+              box-shadow:0px 6px 15px rgba(0,0,0,0.3);
+              width:130px;
+              transition: transform 0.2s ease, box-shadow 0.2s ease;
+            ">
+
+              <img id="youtubeImg" src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" style="width: 50px; height: 50px; transition: opacity 0.4s ease 0s; opacity: 0;">
+
+                       <p style="color: #000000;">YOUTUBE</p>
+
+              <span id="youtubeStatus" style="font-size: 12px; opacity: 0; font-weight: normal; transition: opacity 0.4s ease 0s;">New video</span>
+            </button>
+
+        </div>
+
+    </div>
+
+  <style>
+    .bannerBtn:hover {
+      transform: scale(1.06);
+      box-shadow: 0px 10px 20px rgba(0,0,0,0.4);
+    }
+  </style>
+
+  <script>
+    // ----- LIVE CLOCK -----
+    function updateClock() {
+      const now = new Date();
+
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+
+      document.getElementById('liveClock').textContent = `${hours}:${minutes}:${seconds}`;
+
+      const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('liveDate').textContent = now.toLocaleDateString(undefined, dateOptions);
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ----- ICON ROTATION (existing) -----
+    const discordImages = [
+      "https://cdn-icons-png.flaticon.com/512/2111/2111370.png",
+      "https://cdn-icons-png.flaticon.com/512/5968/5968756.png"
+    ];
+    const discordStatuses = [
+      "Online now",
+      "1.2k members"
+    ];
+
+    const youtubeImages = [
+      "https://cdn-icons-png.flaticon.com/512/1384/1384060.png",
+      "https://cdn-icons-png.flaticon.com/512/1384/1384028.png"
+    ];
+    const youtubeStatuses = [
+      "New video",
+      "Live now"
+    ];
+
+    let discordIndex = 0;
+    let youtubeIndex = 0;
+
+    function rotate(imgId, statusId, images, statuses, index) {
+      const img = document.getElementById(imgId);
+      const status = document.getElementById(statusId);
+
+      img.style.opacity = 0;
+      status.style.opacity = 0;
+
+      setTimeout(() => {
+        img.src = images[index];
+        status.textContent = statuses[index];
+        img.style.opacity = 1;
+        status.style.opacity = 1;
+      }, 400);
+    }
+
+    setInterval(() => {
+      discordIndex = (discordIndex + 1) % discordImages.length;
+      rotate("discordImg", "discordStatus", discordImages, discordStatuses, discordIndex);
+    }, 2500);
+
+    setInterval(() => {
+      youtubeIndex = (youtubeIndex + 1) % youtubeImages.length;
+      rotate("youtubeImg", "youtubeStatus", youtubeImages, youtubeStatuses, youtubeIndex);
+    }, 3000);
+  </script>
+
+</body>
+</html>
